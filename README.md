@@ -33,7 +33,7 @@ Para verlo en local: `python3 -m http.server` en la carpeta y abrir http://local
 ## Publicación (GitHub Pages)
 
 Cada push a `main` publica el sitio con el workflow `.github/workflows/pages.yml`.
-URL: https://larsbologna.github.io/WEB-NADIA/
+URL: https://nadiabanegasarq.github.io/
 
 Requisito único: en GitHub → **Settings → Pages → Build and deployment → Source**, elegir **GitHub Actions**.
 
@@ -52,7 +52,7 @@ Nota: en una subruta de `github.io`, los buscadores no leen `robots.txt`; con un
 
 | Dato | Estado |
 |---|---|
-| **Dominio propio** | Publicado en `https://larsbologna.github.io/WEB-NADIA/`. Al pasar a un dominio propio, cambiar `SITE_URL` en `tools/build_site.py`, regenerar, y actualizar `robots.txt` y las rutas `/WEB-NADIA/` de `404.html`. |
+| **Dominio propio** | Publicado gratis en `https://nadiabanegasarq.github.io/`. Si más adelante se compra un dominio (por ejemplo `.com.ar`), cambiar `SITE_URL` en `tools/build_site.py`, regenerar y actualizar `robots.txt`. |
 | **Foto de Nadia** | Opcional: la sección "Sobre mí" hoy no lleva imagen. |
 | **Instagram** | Agregar al pie solo si hay un enlace real. |
 
