@@ -27,11 +27,9 @@ WHATSAPP = "5493547662066"
 WHATSAPP_VISIBLE = "+54 9 3547 66-2066"
 EMAIL = "nadiabbanegas@gmail.com"
 MATRICULA = "M.P. 13396"
-MAPS_URL = ("https://www.google.com/maps/place/Nadia+Banegas+ARQUITECTA/"
-            "@-31.7205583,-64.4050901,17z/data=!4m6!3m5!1s0x942d55cb2d0c3977:0x12adc37940f0b6f9"
-            "!8m2!3d-31.7205583!4d-64.4050901")
-MAP_EMBED = ("https://maps.google.com/maps?q=Nadia%20Banegas%20ARQUITECTA%2C%20Anisacate%2C%20C%C3%B3rdoba"
-             "&hl=es&z=14&output=embed")
+MAPS_URL = "https://maps.app.goo.gl/ShGkBSKZtU2Fb1uk8"  # ficha "ARQ. Nadia Banegas" en Google Maps
+MAP_EMBED = ("https://www.google.com/maps?q=ARQ.+Nadia+Banegas&ll=-31.7205509,-64.4049583"
+             "&z=16&hl=es&output=embed")
 DEFAULT_MSG = "Hola Nadia, estuve viendo tu página web y quisiera hacerte una consulta sobre un proyecto."
 
 # ---------------------------------------------------------------------------
