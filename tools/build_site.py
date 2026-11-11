@@ -17,7 +17,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE_URL = "https://larsbologna.github.io/WEB-NADIA/"
+SITE_URL = "https://nadiabanegasarq.github.io/"
 LASTMOD = "2026-11-06"
 
 # ---------------------------------------------------------------------------
