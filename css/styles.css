@@ -513,6 +513,14 @@ body.lightbox-open { overflow: hidden; }
 /* Página de contacto */
 .contact-page { padding-block: clamp(3rem, 8vw, 6rem); }
 
+/* Foto de Nadia */
+.about-photo { margin: 0; }
+.about-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--ink); box-shadow: 12px 12px 0 -1px var(--white), 12px 12px 0 0 var(--line); }
+.about-side { display: grid; gap: 2rem; align-content: start; }
+.about-home { display: grid; gap: 2.5rem; align-items: center; }
+.about-home .about-photo { max-width: 460px; margin-right: 12px; }
+.about-meta { font-family: var(--f-mono); font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; color: var(--terra-ink); }
+
 @media (min-width: 640px) {
   .service-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .service-row { grid-template-columns: 140px minmax(0, 1fr); gap: 2rem; }
@@ -523,7 +531,8 @@ body.lightbox-open { overflow: hidden; }
   .service-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; }
   .cta-band-inner { grid-template-columns: 1fr auto; gap: 3rem; }
   .about-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
-  .about-facts { position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
+  .about-side { position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
+  .about-home { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

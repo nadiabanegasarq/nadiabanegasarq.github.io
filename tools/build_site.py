@@ -132,6 +132,7 @@ PROJECTS = [
               "exteriores y el disfrute de las áreas recreativas. El resultado es un complejo pensado para brindar "
               "comodidad a sus usuarios y aprovechar al máximo las actividades al aire libre durante todo el año."]},
 ]
+NADIA_PHOTO = "assets/img/nadia.webp"
 FEATURED = ["vivienda-horizontal", "vivienda-de-descanso", "cabana-elevada"]
 
 # ---------------------------------------------------------------------------
@@ -435,12 +436,12 @@ def header(active):
 """
 
 
-def contact_full():
-    """Contenido de la página Contacto: datos, botón de WhatsApp y mapa."""
-    return f"""    <section class="contact contact-page" aria-labelledby="page-title">
+def contact_full(level="h1", title_id="page-title"):
+    """Datos de contacto, botón de WhatsApp y mapa (página Contacto y final del inicio)."""
+    return f"""    <section class="contact contact-page" id="contacto" aria-labelledby="{title_id}">
       <div class="wrap contact-grid">
         <div class="contact-copy">
-          <h1 class="contact-title" id="page-title">{CONTACT_TITLE}</h1>
+          <{level} class="contact-title" id="{title_id}">{CONTACT_TITLE}</{level}>
           <p class="contact-text">{CONTACT_TEXT} Atención profesional en Anisacate y localidades cercanas.</p>
           <a class="btn btn-accent btn-xl" href="https://wa.me/{WHATSAPP}" data-wa target="_blank" rel="noopener">{wa_icon()} Escribir por WhatsApp</a>
           <dl class="contact-block">
@@ -581,16 +582,6 @@ def page_home():
             <span class="service-chip-arrow" aria-hidden="true">→</span>
           </a></li>""" for k, t, _ in SERVICES)
 
-    featured = []
-    for slug in FEATURED:
-        p = find_project(slug)
-        featured.append(f"""          <li class="feature">
-            <a class="feature-link" href="proyectos.html#{p['slug']}">
-              <span class="feature-media">{img_tag(photo(p['dir'], p['cover'], thumb=True), p['name'])}</span>
-              <span class="feature-meta"><span class="feature-name">{e(p['name'])}</span><span class="feature-m2">{p['m2']} m²</span></span>
-            </a>
-          </li>""")
-    featured = "\n".join(featured)
 
     reviews = "\n".join(f"""          <li class="review">
             <blockquote class="review-text">{''.join(f'<p>{e(t)}</p>' for t in paras)}</blockquote>
@@ -619,27 +610,15 @@ def page_home():
       </div>
     </section>
 
-    <section class="section band-white" aria-labelledby="services-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 class="section-title" id="services-title">Servicios</h2>
-          <a class="text-link" href="servicios.html">Ver todos los servicios →</a>
+    <section class="section band-sand" aria-labelledby="about-title">
+      <div class="wrap about-home">
+        <figure class="about-photo">{img_tag(NADIA_PHOTO, 'Nadia Banegas, arquitecta')}</figure>
+        <div class="about-copy">
+          <h2 class="section-title" id="about-title">Soy Nadia, <em>arquitecta.</em></h2>
+          <p class="about-intro">{e(ABOUT[0])}</p>
+          <p class="about-meta">{MATRICULA} · FAUD · Universidad Nacional de Córdoba</p>
+          <a class="text-link" href="sobre-mi.html">Conocer más sobre mí →</a>
         </div>
-        <ul class="service-chips">
-{services}
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="projects-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 class="section-title" id="projects-title">Proyectos</h2>
-          <a class="text-link" href="proyectos.html">Ver los {len(PROJECTS)} proyectos →</a>
-        </div>
-        <ul class="feature-grid">
-{featured}
-        </ul>
       </div>
     </section>
 
@@ -655,7 +634,19 @@ def page_home():
       </div>
     </section>
 
-{cta_band()}
+    <section class="section" aria-labelledby="services-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="section-title" id="services-title">Servicios</h2>
+          <a class="text-link" href="servicios.html">Ver todos los servicios →</a>
+        </div>
+        <ul class="service-chips">
+{services}
+        </ul>
+      </div>
+    </section>
+
+{contact_full("h2", "contact-title")}
   </main>
 """
     return page("Nadia Banegas | Arquitecta en Anisacate, Córdoba",
@@ -788,12 +779,15 @@ def page_about():
 
     <section class="section section-tight" aria-label="Presentación">
       <div class="wrap about-grid">
-        <dl class="about-facts">
+        <div class="about-side">
+          <figure class="about-photo">{img_tag(NADIA_PHOTO, 'Nadia Banegas, arquitecta')}</figure>
+          <dl class="about-facts">
           <div><dt>Matrícula</dt><dd>{MATRICULA}</dd></div>
           <div><dt>Formación</dt><dd>FAUD · Universidad Nacional de Córdoba</dd></div>
           <div><dt>Trayectoria</dt><dd>Más de 15 años</dd></div>
-          <div><dt>Zona</dt><dd>Anisacate y localidades cercanas</dd></div>
-        </dl>
+            <div><dt>Zona</dt><dd>Anisacate y localidades cercanas</dd></div>
+          </dl>
+        </div>
         <div class="about-copy">
           <p class="about-intro">{e(ABOUT[0])}</p>
           <div class="about-text">
