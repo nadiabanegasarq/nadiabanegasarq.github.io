@@ -478,6 +478,22 @@ def cta_band():
 """
 
 
+def about_card(level, title_id, title_cls):
+    """Foto chica de Nadia a un lado y título con datos al otro (inicio y Sobre mí)."""
+    return f"""<div class="about-card">
+          <figure class="about-photo">{img_tag(NADIA_PHOTO, 'Nadia Banegas, arquitecta')}</figure>
+          <div class="about-card-info">
+            <{level} class="{title_cls}" id="{title_id}">Soy Nadia, <em>arquitecta.</em></{level}>
+            <dl class="about-facts">
+              <div><dt>Matrícula</dt><dd>{MATRICULA}</dd></div>
+              <div><dt>Formación</dt><dd>FAUD · Universidad Nacional de Córdoba</dd></div>
+              <div><dt>Trayectoria</dt><dd>Más de 15 años</dd></div>
+              <div><dt>Zona</dt><dd>Anisacate y localidades cercanas</dd></div>
+            </dl>
+          </div>
+        </div>"""
+
+
 def page_hero(title, lead):
     return f"""    <section class="page-hero" aria-labelledby="page-title">
       <div class="wrap">
@@ -612,11 +628,9 @@ def page_home():
 
     <section class="section band-sand" aria-labelledby="about-title">
       <div class="wrap about-home">
-        <figure class="about-photo">{img_tag(NADIA_PHOTO, 'Nadia Banegas, arquitecta')}</figure>
+        {about_card("h2", "about-title", "section-title")}
         <div class="about-copy">
-          <h2 class="section-title" id="about-title">Soy Nadia, <em>arquitecta.</em></h2>
           <p class="about-intro">{e(ABOUT[0])}</p>
-          <p class="about-meta">{MATRICULA} · FAUD · Universidad Nacional de Córdoba</p>
           <a class="text-link" href="sobre-mi.html">Conocer más sobre mí →</a>
         </div>
       </div>
@@ -773,26 +787,15 @@ def page_about():
   <main id="contenido">
     <section class="page-hero" aria-labelledby="page-title">
       <div class="wrap">
-        <h1 class="page-title" id="page-title">Soy Nadia, <em>arquitecta.</em></h1>
+        {about_card("h1", "page-title", "page-title")}
       </div>
     </section>
 
     <section class="section section-tight" aria-label="Presentación">
-      <div class="wrap about-grid">
-        <div class="about-side">
-          <figure class="about-photo">{img_tag(NADIA_PHOTO, 'Nadia Banegas, arquitecta')}</figure>
-          <dl class="about-facts">
-          <div><dt>Matrícula</dt><dd>{MATRICULA}</dd></div>
-          <div><dt>Formación</dt><dd>FAUD · Universidad Nacional de Córdoba</dd></div>
-          <div><dt>Trayectoria</dt><dd>Más de 15 años</dd></div>
-            <div><dt>Zona</dt><dd>Anisacate y localidades cercanas</dd></div>
-          </dl>
-        </div>
-        <div class="about-copy">
-          <p class="about-intro">{e(ABOUT[0])}</p>
-          <div class="about-text">
+      <div class="wrap about-copy about-copy-page">
+        <p class="about-intro">{e(ABOUT[0])}</p>
+        <div class="about-text">
 {about}
-          </div>
         </div>
       </div>
     </section>

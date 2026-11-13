@@ -513,13 +513,18 @@ body.lightbox-open { overflow: hidden; }
 /* Página de contacto */
 .contact-page { padding-block: clamp(3rem, 8vw, 6rem); }
 
-/* Foto de Nadia */
+/* Foto de Nadia: chica a un lado, datos al otro */
+.about-card { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 1.1rem; align-items: center; }
 .about-photo { margin: 0; }
-.about-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--ink); box-shadow: 12px 12px 0 -1px var(--white), 12px 12px 0 0 var(--line); }
-.about-side { display: grid; gap: 2rem; align-content: start; }
-.about-home { display: grid; gap: 2.5rem; align-items: center; }
-.about-home .about-photo { max-width: 460px; margin-right: 12px; }
-.about-meta { font-family: var(--f-mono); font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; color: var(--terra-ink); }
+.about-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--ink); box-shadow: 8px 8px 0 -1px var(--white), 8px 8px 0 0 var(--line); }
+.about-card-info { display: grid; gap: 1rem; min-width: 0; }
+.about-card .section-title, .about-card .page-title { font-size: clamp(1.75rem, 6.5vw, 4rem); }
+.about-card .about-facts > div { grid-template-columns: 1fr; gap: 0; padding: .45rem 0; }
+.about-card .about-facts dt { font-size: .6875rem; padding-top: 0; }
+.about-card .about-facts dd { font-size: .875rem; line-height: 1.35; }
+.about-home { display: grid; gap: 2rem; }
+.about-copy-page > * { max-width: 760px; }
+.page-hero .about-card { width: 100%; }
 
 @media (min-width: 640px) {
   .service-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -531,8 +536,11 @@ body.lightbox-open { overflow: hidden; }
   .service-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; }
   .cta-band-inner { grid-template-columns: 1fr auto; gap: 3rem; }
   .about-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
-  .about-side { position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
-  .about-home { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 5rem; }
+  .about-card { grid-template-columns: 260px minmax(0, 1fr); gap: 3rem; }
+  .about-card .about-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem; }
+  .about-card .about-facts dd { font-size: .9375rem; }
+  .about-home { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 4rem; align-items: center; }
+  .about-home .about-card { grid-template-columns: 220px minmax(0, 1fr); gap: 2.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
