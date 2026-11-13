@@ -5,10 +5,13 @@ Sitio web estático (HTML + CSS + JS, sin dependencias ni build) para Nadia Bane
 ## Estructura
 
 ```
-index.html                  Inicio: servicios, proyectos destacados, sobre mí, proceso, reseñas, contacto
+index.html                  Inicio: presentación, accesos a servicios, 3 proyectos, reseñas
+servicios.html              Los 6 servicios y cómo trabajo
 proyectos.html              Los 10 proyectos con planta, fotos de obra y video
+sobre-mi.html               Presentación de Nadia, matrícula y trayectoria
 preguntas-frecuentes.html   Las preguntas frecuentes de Nadia, por categoría
-tools/build_site.py         Genera las tres páginas: todo el contenido se edita acá
+contacto.html               WhatsApp, correo, zona de atención y mapa
+tools/build_site.py         Genera todas las páginas: el contenido se edita acá
 css/styles.css              Estilos (mobile first)
 js/content.js               Número y mensajes de WhatsApp
 js/main.js                  Menú, acordeón, visor de fotos y enlaces de WhatsApp

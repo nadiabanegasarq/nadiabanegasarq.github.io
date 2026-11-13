@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE_URL = "https://nadiabanegasarq.github.io/"
-LASTMOD = "2026-11-06"
+LASTMOD = "2026-11-13"
 
 # ---------------------------------------------------------------------------
 # Datos de contacto (verificados en el sitio anterior de Nadia)
@@ -50,7 +50,7 @@ SERVICES = [
     ("obra", "Conducción técnica de obra",
      "Seguimiento profesional y control técnico durante la ejecución de la obra."),
     ("asesoramiento", "Asesoramiento profesional",
-     "Consultas técnicas para evaluar alternativas y definir soluciones antes de comenzar una obra."),
+     "Consultas técnicas para evaluar alternativas y definir soluciones constructivas."),
 ]
 
 # ---------------------------------------------------------------------------
@@ -235,9 +235,6 @@ FAQ = [
           "la duración puede variar según la localidad y las características del expediente."]),
     ]),
 ]
-FAQ_HOME = ["¿Cuánto cuesta realizar un plano?", "¿Qué incluye el presupuesto para la aprobación de un plano municipal?",
-            "¿En qué zonas trabajás?", "¿Cuánto demora un trámite municipal?"]
-
 ABOUT = [
     "Soy arquitecta, egresada de la Facultad de Arquitectura, Urbanismo y Diseño de la Universidad Nacional de "
     "Córdoba, y cuento con más de 15 años de trayectoria profesional en el desarrollo de proyectos, ampliaciones y "
@@ -314,9 +311,12 @@ def find_project(slug):
 # ===========================================================================
 # Plantilla compartida
 # ===========================================================================
-NAV = [("index.html", "Inicio", "inicio"), ("index.html#servicios", "Servicios", None),
-       ("proyectos.html", "Proyectos", "proyectos"), ("index.html#sobre-mi", "Sobre mí", None),
-       ("preguntas-frecuentes.html", "Preguntas frecuentes", "faq"), ("index.html#contacto", "Contacto", None)]
+NAV = [("index.html", "Inicio", "inicio"), ("servicios.html", "Servicios", "servicios"),
+       ("proyectos.html", "Proyectos", "proyectos"), ("sobre-mi.html", "Sobre mí", "sobre-mi"),
+       ("preguntas-frecuentes.html", "Preguntas frecuentes", "faq"), ("contacto.html", "Contacto", "contacto")]
+PAGES = ["", "servicios.html", "proyectos.html", "sobre-mi.html", "preguntas-frecuentes.html", "contacto.html"]
+CONTACT_TITLE = "¿Necesitás <em>asesoramiento?</em>"
+CONTACT_TEXT = "Escribime y te indicaré cuál es el servicio adecuado para tu caso."
 
 
 def head(title, description, path, extra_ld=None, og_image="assets/img/og-image.jpg"):
@@ -435,13 +435,13 @@ def header(active):
 """
 
 
-def contact_band(heading_level="h2"):
-    return f"""    <section class="contact" id="contacto" aria-labelledby="contact-title">
+def contact_full():
+    """Contenido de la página Contacto: datos, botón de WhatsApp y mapa."""
+    return f"""    <section class="contact contact-page" aria-labelledby="page-title">
       <div class="wrap contact-grid">
         <div class="contact-copy">
-          <p class="eyebrow eyebrow-light">Contacto</p>
-          <{heading_level} class="contact-title" id="contact-title">¿Tenés un proyecto <em>en mente?</em></{heading_level}>
-          <p class="contact-text">Escribime y te indicaré cuál es el servicio adecuado para tu caso. Podemos conversar sobre tu idea y evaluar juntos cómo avanzar.</p>
+          <h1 class="contact-title" id="page-title">{CONTACT_TITLE}</h1>
+          <p class="contact-text">{CONTACT_TEXT} Atención profesional en Anisacate y localidades cercanas.</p>
           <a class="btn btn-accent btn-xl" href="https://wa.me/{WHATSAPP}" data-wa target="_blank" rel="noopener">{wa_icon()} Escribir por WhatsApp</a>
           <dl class="contact-block">
             <div><dt>WhatsApp</dt><dd><a href="https://wa.me/{WHATSAPP}" data-wa target="_blank" rel="noopener">{WHATSAPP_VISIBLE}</a></dd></div>
@@ -451,7 +451,7 @@ def contact_band(heading_level="h2"):
         </div>
         <div class="contact-map">
           <div class="map-frame">
-            <iframe title="Mapa de Anisacate, Córdoba, con la ubicación de Nadia Banegas en Google Maps" src="{e(MAP_EMBED)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <iframe title="Mapa con la ubicación de ARQ. Nadia Banegas en Anisacate, Córdoba" src="{e(MAP_EMBED)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
           </div>
           <a class="map-link" href="{e(MAPS_URL)}" target="_blank" rel="noopener">Ver en Google Maps <span aria-hidden="true">↗</span></a>
         </div>
@@ -460,7 +460,39 @@ def contact_band(heading_level="h2"):
 """
 
 
+def cta_band():
+    """Cierre breve al final de cada página."""
+    return f"""    <section class="cta-band" aria-labelledby="cta-title">
+      <div class="wrap cta-band-inner">
+        <div class="cta-band-copy">
+          <h2 class="cta-band-title" id="cta-title">{CONTACT_TITLE}</h2>
+          <p class="cta-band-text">{CONTACT_TEXT}</p>
+        </div>
+        <div class="cta-band-actions">
+          <a class="btn btn-accent btn-lg" href="https://wa.me/{WHATSAPP}" data-wa target="_blank" rel="noopener">{wa_icon()} Escribir por WhatsApp</a>
+          <a class="text-link text-link-light" href="contacto.html">Ver datos de contacto</a>
+        </div>
+      </div>
+    </section>
+"""
+
+
+def page_hero(title, lead):
+    return f"""    <section class="page-hero" aria-labelledby="page-title">
+      <div class="wrap">
+        <h1 class="page-title" id="page-title">{title}</h1>
+        <p class="lead">{lead}</p>
+      </div>
+    </section>
+"""
+
+
+def page(title, description, path, active, body, extra_ld=None):
+    return head(title, description, path, extra_ld) + "\n" + header(active) + body + footer()
+
+
 def footer():
+    links = "\n".join(f'          <li><a href="{h}">{l}</a></li>' for h, l, _ in NAV)
     return f"""  <footer class="site-footer">
     <div class="wrap footer-grid">
       <div class="footer-brand">
@@ -471,11 +503,7 @@ def footer():
       </div>
       <nav class="footer-nav" aria-label="Enlaces del pie de página">
         <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="index.html#servicios">Servicios</a></li>
-          <li><a href="proyectos.html">Proyectos</a></li>
-          <li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li>
-          <li><a href="index.html#contacto">Contacto</a></li>
+{links}
         </ul>
       </nav>
       <div class="footer-social">
@@ -543,16 +571,15 @@ def gallery_links(p):
 
 
 # ===========================================================================
-# Página: Inicio
+# Página: Inicio (presentación breve; cada tema tiene su propia página)
 # ===========================================================================
 def page_home():
     hero_p = find_project("vivienda-de-descanso")
-    services = "\n".join(f"""          <li class="service">
-            <div class="service-media">{img_tag(f'assets/img/servicio-{k}.svg', '')}</div>
-            <h3 class="service-title">{e(t)}</h3>
-            <p class="service-desc">{e(d)}</p>
-            {wa('Consultar por este servicio', 'service-cta', service=t)}
-          </li>""" for k, t, d in SERVICES)
+    services = "\n".join(f"""          <li><a class="service-chip" href="servicios.html#{k}">
+            <span class="service-chip-media">{img_tag(f'assets/img/servicio-{k}.svg', '')}</span>
+            <span class="service-chip-name">{e(t)}</span>
+            <span class="service-chip-arrow" aria-hidden="true">→</span>
+          </a></li>""" for k, t, _ in SERVICES)
 
     featured = []
     for slug in FEATURED:
@@ -570,13 +597,10 @@ def page_home():
             <p class="review-author">{e(name)}</p>
           </li>""" for name, paras in REVIEWS)
 
-    faq_items = [(q, a) for _, _, qs in FAQ for q, a in qs if q in FAQ_HOME]
-    about = "\n".join(f"            <p>{e(t)}</p>" for t in ABOUT[1:])
-
     body = f"""
   <main id="contenido">
 
-    <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Arquitectura, gestión y acompañamiento técnico</p>
@@ -593,99 +617,37 @@ def page_home():
           <figcaption><span>{e(hero_p['name'])}</span><span>{hero_p['m2']} m²</span></figcaption>
         </figure>
       </div>
-      <div class="wrap">
-        <ul class="facts" aria-label="Datos profesionales">
-          <li><span>Matrícula</span>{MATRICULA}</li>
-          <li><span>Trayectoria</span>Más de 15 años</li>
-          <li><span>Formación</span>FAUD · Universidad Nacional de Córdoba</li>
-          <li><span>Zona</span>Anisacate y localidades cercanas</li>
-        </ul>
-      </div>
     </section>
 
-    <section class="section band-white" id="servicios" aria-labelledby="services-title">
+    <section class="section band-white" aria-labelledby="services-title">
       <div class="wrap">
         <div class="section-head">
-          <div>
-            <p class="eyebrow">Servicios</p>
-            <h2 class="section-title" id="services-title">¿Qué necesitás <em>resolver?</em></h2>
-          </div>
-          <p class="lead">Servicios profesionales para acompañarte en cada etapa de tu proyecto.</p>
+          <h2 class="section-title" id="services-title">Servicios</h2>
+          <a class="text-link" href="servicios.html">Ver todos los servicios →</a>
         </div>
-        <ul class="service-grid">
+        <ul class="service-chips">
 {services}
         </ul>
-        <div class="cta-strip">
-          <p>¿No sabés qué servicio necesitás? <strong>Escribime y te indicaré cuál es el adecuado para tu caso.</strong></p>
-          {wa('Hacer una consulta', 'btn btn-primary')}
-        </div>
       </div>
     </section>
 
-    <section class="section" id="proyectos" aria-labelledby="projects-title">
+    <section class="section" aria-labelledby="projects-title">
       <div class="wrap">
         <div class="section-head">
-          <div>
-            <p class="eyebrow">Proyectos</p>
-            <h2 class="section-title" id="projects-title">Espacios, ideas y <em>soluciones.</em></h2>
-          </div>
-          <p class="lead">Viviendas, cabañas, quinchos y un complejo de departamentos, desde el plano hasta la obra.</p>
+          <h2 class="section-title" id="projects-title">Proyectos</h2>
+          <a class="text-link" href="proyectos.html">Ver los {len(PROJECTS)} proyectos →</a>
         </div>
         <ul class="feature-grid">
 {featured}
         </ul>
-        <p class="section-more"><a class="btn btn-line" href="proyectos.html">Ver los {len(PROJECTS)} proyectos <span class="btn-arrow" aria-hidden="true">→</span></a></p>
       </div>
     </section>
 
-    <section class="section band-sand" id="sobre-mi" aria-labelledby="about-title">
-      <div class="wrap about-grid">
-        <div class="about-head">
-          <p class="eyebrow">Sobre mí</p>
-          <h2 class="section-title" id="about-title">Soy Nadia, <em>arquitecta.</em></h2>
-          <dl class="about-facts">
-            <div><dt>Matrícula</dt><dd>{MATRICULA}</dd></div>
-            <div><dt>Formación</dt><dd>FAUD · Universidad Nacional de Córdoba</dd></div>
-            <div><dt>Trayectoria</dt><dd>Más de 15 años</dd></div>
-          </dl>
-        </div>
-        <div class="about-copy">
-          <p class="about-intro">{e(ABOUT[0])}</p>
-          <div class="about-text">
-{about}
-          </div>
-          {wa('Trabajemos en tu proyecto', 'btn btn-primary', msg='Hola Nadia, estuve viendo tu página web y me gustaría que trabajemos en mi proyecto.')}
-        </div>
-      </div>
-    </section>
-
-    <section class="section band-white" id="proceso" aria-labelledby="process-title">
+    <section class="section band-white" aria-labelledby="reviews-title">
       <div class="wrap">
         <div class="section-head">
-          <div>
-            <p class="eyebrow">Proceso</p>
-            <h2 class="section-title" id="process-title">Tu proyecto, <em>paso a paso.</em></h2>
-          </div>
-        </div>
-        <ol class="steps">
-          <li class="step"><span class="step-num">1</span><h3 class="step-title">Primer contacto</h3><p>Me contás qué necesitás y cuáles son tus objetivos.</p></li>
-          <li class="step"><span class="step-num">2</span><h3 class="step-title">Evaluación y presupuesto</h3><p>Con esa información realizo una evaluación inicial y elaboro un presupuesto detallado.</p></li>
-          <li class="step"><span class="step-num">3</span><h3 class="step-title">Desarrollo</h3><p>Una vez aprobado el presupuesto, se desarrolla la tarea acordada.</p></li>
-          <li class="step"><span class="step-num">4</span><h3 class="step-title">Acompañamiento</h3><p>Seguimiento correspondiente según el alcance del servicio contratado.</p></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section" id="resenas" aria-labelledby="reviews-title">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Reseñas</p>
-            <h2 class="section-title" id="reviews-title">La experiencia de quienes <em>confiaron.</em></h2>
-          </div>
-          <div class="reviews-actions">
-            <a class="btn btn-line" href="{e(MAPS_URL)}" target="_blank" rel="noopener">Ver más reseñas en Google <span class="btn-arrow" aria-hidden="true">↗</span></a>
-          </div>
+          <h2 class="section-title" id="reviews-title">Reseñas</h2>
+          <a class="text-link" href="{e(MAPS_URL)}" target="_blank" rel="noopener">Ver más reseñas en Google ↗</a>
         </div>
         <ul class="review-list">
 {reviews}
@@ -693,27 +655,58 @@ def page_home():
       </div>
     </section>
 
-    <section class="section band-sand" id="preguntas" aria-labelledby="faq-title">
-      <div class="wrap faq-grid">
-        <div class="faq-head">
-          <p class="eyebrow">Preguntas frecuentes</p>
-          <h2 class="section-title" id="faq-title">Antes de <em>empezar.</em></h2>
-          <p class="lead">Las consultas más habituales sobre presupuestos, plazos y trámites.</p>
-          <a class="btn btn-primary" href="preguntas-frecuentes.html">Ver todas las preguntas <span class="btn-arrow" aria-hidden="true">→</span></a>
-        </div>
-        <div class="accordion" data-accordion>
-{accordion(faq_items, 'faq-inicio')}
-        </div>
+{cta_band()}
+  </main>
+"""
+    return page("Nadia Banegas | Arquitecta en Anisacate, Córdoba",
+                "Arquitecta en Anisacate, Córdoba (M.P. 13396). Planos municipales, relevamientos, proyectos, "
+                "ampliaciones, conducción técnica de obra y asesoramiento profesional.", "", "inicio", body)
+
+
+# ===========================================================================
+# Página: Servicios
+# ===========================================================================
+def page_services():
+    items = "\n".join(f"""          <li class="service-row" id="{k}">
+            <span class="service-row-media">{img_tag(f'assets/img/servicio-{k}.svg', '')}</span>
+            <div class="service-row-copy">
+              <h2 class="service-title">{e(t)}</h2>
+              <p class="service-desc">{e(d)}</p>
+              {wa('Consultar por este servicio', 'service-cta', service=t)}
+            </div>
+          </li>""" for k, t, d in SERVICES)
+    body = f"""
+  <main id="contenido">
+{page_hero("Servicios", "Servicios profesionales para acompañarte en cada etapa de tu proyecto.")}
+    <section class="section section-tight" aria-label="Lista de servicios">
+      <div class="wrap">
+        <ul class="service-rows">
+{items}
+        </ul>
       </div>
     </section>
 
-{contact_band()}
+    <section class="section band-white" aria-labelledby="process-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="section-title" id="process-title">Cómo trabajo</h2>
+        </div>
+        <ol class="steps">
+          <li class="step"><span class="step-num">1</span><h3 class="step-title">Primer contacto</h3><p>Me contás qué necesitás y cuáles son tus objetivos.</p></li>
+          <li class="step"><span class="step-num">2</span><h3 class="step-title">Evaluación y presupuesto</h3><p>Realizo una evaluación inicial y elaboro un presupuesto detallado.</p></li>
+          <li class="step"><span class="step-num">3</span><h3 class="step-title">Desarrollo</h3><p>Una vez aprobado el presupuesto, se desarrolla la tarea acordada.</p></li>
+          <li class="step"><span class="step-num">4</span><h3 class="step-title">Acompañamiento</h3><p>Seguimiento según el alcance del servicio contratado.</p></li>
+        </ol>
+      </div>
+    </section>
+
+{cta_band()}
   </main>
 """
-    return (head("Nadia Banegas | Arquitecta en Anisacate, Córdoba",
-                 "Arquitecta en Anisacate, Córdoba (M.P. 13396). Planos municipales, relevamientos, proyectos, "
-                 "ampliaciones, conducción técnica de obra y asesoramiento profesional.", "")
-            + "\n" + header("inicio") + body + footer())
+    return page("Servicios | Nadia Banegas, Arquitecta en Anisacate",
+                "Planos municipales, relevamientos, proyectos arquitectónicos, ampliaciones y remodelaciones, "
+                "conducción técnica de obra y asesoramiento profesional en Anisacate, Córdoba.",
+                "servicios.html", "servicios", body)
 
 
 # ===========================================================================
@@ -744,7 +737,6 @@ def page_projects():
             <div hidden>{links}</div>
           </div>
           <div class="project-copy">
-            <p class="project-num">{i:02d} / {len(PROJECTS):02d}</p>
             <h2 class="project-title" id="{p['slug']}-title">{e(p['name'])}</h2>
             <p class="project-m2">{p['m2']} m²</p>
             <div class="project-text">{text}</div>
@@ -760,9 +752,7 @@ def page_projects():
   <main id="contenido">
     <section class="page-hero" aria-labelledby="page-title">
       <div class="wrap">
-        <p class="eyebrow">Proyectos</p>
-        <h1 class="page-title" id="page-title">Espacios, ideas y <em>soluciones.</em></h1>
-        <p class="lead">Una selección de trabajos: viviendas, cabañas, quinchos y un complejo de departamentos. Cada proyecto incluye su planta y fotos de las distintas etapas de obra.</p>
+        <h1 class="page-title" id="page-title">Proyectos</h1>
         <nav class="project-index" aria-label="Índice de proyectos">
           <ol>
 {index}
@@ -775,13 +765,50 @@ def page_projects():
 {blocks}
     </div>
 
-{contact_band()}
+{cta_band()}
   </main>
 """
-    return (head("Proyectos | Nadia Banegas, Arquitecta en Anisacate",
-                 "Proyectos de la arquitecta Nadia Banegas en Córdoba: viviendas, cabañas, quinchos y un complejo de "
-                 "departamentos, con plantas y fotos de obra.", "proyectos.html")
-            + "\n" + header("proyectos") + body + footer())
+    return page("Proyectos | Nadia Banegas, Arquitecta en Anisacate",
+                "Proyectos de la arquitecta Nadia Banegas en Córdoba: viviendas, cabañas, quinchos y un complejo de "
+                "departamentos, con plantas y fotos de obra.", "proyectos.html", "proyectos", body)
+
+
+# ===========================================================================
+# Página: Sobre mí
+# ===========================================================================
+def page_about():
+    about = "\n".join(f"            <p>{e(t)}</p>" for t in ABOUT[1:])
+    body = f"""
+  <main id="contenido">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="wrap">
+        <h1 class="page-title" id="page-title">Soy Nadia, <em>arquitecta.</em></h1>
+      </div>
+    </section>
+
+    <section class="section section-tight" aria-label="Presentación">
+      <div class="wrap about-grid">
+        <dl class="about-facts">
+          <div><dt>Matrícula</dt><dd>{MATRICULA}</dd></div>
+          <div><dt>Formación</dt><dd>FAUD · Universidad Nacional de Córdoba</dd></div>
+          <div><dt>Trayectoria</dt><dd>Más de 15 años</dd></div>
+          <div><dt>Zona</dt><dd>Anisacate y localidades cercanas</dd></div>
+        </dl>
+        <div class="about-copy">
+          <p class="about-intro">{e(ABOUT[0])}</p>
+          <div class="about-text">
+{about}
+          </div>
+        </div>
+      </div>
+    </section>
+
+{cta_band()}
+  </main>
+"""
+    return page("Sobre mí | Nadia Banegas, Arquitecta en Anisacate",
+                "Nadia Banegas, arquitecta egresada de la FAUD (UNC), M.P. 13396, con más de 15 años de trayectoria "
+                "en proyectos, ampliaciones, remodelaciones y gestión municipal.", "sobre-mi.html", "sobre-mi", body)
 
 
 # ===========================================================================
@@ -790,7 +817,7 @@ def page_projects():
 def page_faq():
     nav = "\n".join(f'            <li><a href="#{slug}">{e(title)}</a></li>' for slug, title, _ in FAQ)
     sections = []
-    for n, (slug, title, items) in enumerate(FAQ, 1):
+    for slug, title, items in FAQ:
         sections.append(f"""      <section class="faq-group" id="{slug}" aria-labelledby="{slug}-title">
         <h2 class="faq-group-title" id="{slug}-title">{e(title)}</h2>
         <div class="accordion" data-accordion>
@@ -804,21 +831,13 @@ def page_faq():
                          for _, _, qs in FAQ for q, a in qs]}
     body = f"""
   <main id="contenido">
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="wrap">
-        <p class="eyebrow">Preguntas frecuentes</p>
-        <h1 class="page-title" id="page-title">Antes de <em>empezar.</em></h1>
-        <p class="lead">Las respuestas a las consultas más habituales sobre el servicio, la modalidad de trabajo, los presupuestos y los plazos. Si tu duda no está acá, escribime.</p>
-      </div>
-    </section>
-
-    <div class="section faq-page">
+{page_hero("Preguntas frecuentes", "Si tu duda no está acá, escribime.")}
+    <div class="section section-tight faq-page">
       <div class="wrap faq-layout">
         <nav class="faq-nav" aria-label="Categorías">
           <ul>
 {nav}
           </ul>
-          {wa('Hacer una consulta', 'btn btn-primary', msg='Hola Nadia, estuve viendo las preguntas frecuentes de tu página y quisiera hacerte una consulta.')}
         </nav>
         <div class="faq-groups">
 {sections}
@@ -826,28 +845,41 @@ def page_faq():
       </div>
     </div>
 
-{contact_band()}
+{cta_band()}
   </main>
 """
-    return (head("Preguntas frecuentes | Nadia Banegas, Arquitecta",
-                 "Respuestas sobre planos municipales, presupuestos, honorarios, formas de pago, plazos y zonas de "
-                 "trabajo de la arquitecta Nadia Banegas en Anisacate, Córdoba.", "preguntas-frecuentes.html",
-                 extra_ld=[ld])
-            + "\n" + header("faq") + body + footer())
+    return page("Preguntas frecuentes | Nadia Banegas, Arquitecta",
+                "Respuestas sobre planos municipales, presupuestos, honorarios, formas de pago, plazos y zonas de "
+                "trabajo de la arquitecta Nadia Banegas en Anisacate, Córdoba.", "preguntas-frecuentes.html", "faq",
+                body, extra_ld=[ld])
+
+
+# ===========================================================================
+# Página: Contacto
+# ===========================================================================
+def page_contact():
+    body = f"""
+  <main id="contenido">
+{contact_full()}
+  </main>
+"""
+    return page("Contacto | Nadia Banegas, Arquitecta en Anisacate",
+                "Consultas por WhatsApp al +54 9 3547 66-2066 o por correo. Atención profesional en Anisacate y "
+                "localidades cercanas, Córdoba.", "contacto.html", "contacto", body)
 
 
 def sitemap():
-    urls = ["", "proyectos.html", "preguntas-frecuentes.html"]
-    items = "\n".join(f"  <url>\n    <loc>{SITE_URL}{u}</loc>\n    <lastmod>{LASTMOD}</lastmod>\n  </url>" for u in urls)
+    items = "\n".join(f"  <url>\n    <loc>{SITE_URL}{u}</loc>\n    <lastmod>{LASTMOD}</lastmod>\n  </url>" for u in PAGES)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{items}\n</urlset>\n'
 
 
 def main():
-    (ROOT / "index.html").write_text(page_home(), encoding="utf-8")
-    (ROOT / "proyectos.html").write_text(page_projects(), encoding="utf-8")
-    (ROOT / "preguntas-frecuentes.html").write_text(page_faq(), encoding="utf-8")
+    pages = {"index.html": page_home, "servicios.html": page_services, "proyectos.html": page_projects,
+             "sobre-mi.html": page_about, "preguntas-frecuentes.html": page_faq, "contacto.html": page_contact}
+    for name, fn in pages.items():
+        (ROOT / name).write_text(fn(), encoding="utf-8")
     (ROOT / "sitemap.xml").write_text(sitemap(), encoding="utf-8")
-    print("Generados: index.html, proyectos.html, preguntas-frecuentes.html, sitemap.xml")
+    print("Generados:", ", ".join(pages), "y sitemap.xml")
 
 
 if __name__ == "__main__":
