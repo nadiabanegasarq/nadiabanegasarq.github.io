@@ -55,26 +55,6 @@
   (mqDesktop.addEventListener ? mqDesktop.addEventListener('change', syncPanel) : mqDesktop.addListener(syncPanel));
   syncPanel();
 
-  /* ---------- Sección activa en el menú (inicio) ---------- */
-  if (document.body.dataset.page === 'inicio' && 'IntersectionObserver' in window) {
-    var links = {};
-    document.querySelectorAll('[data-nav-link]').forEach(function (a) {
-      var hash = a.getAttribute('href').split('#')[1] || 'inicio';
-      links[hash] = a;
-    });
-    var alias = { proyectos: null, proceso: 'sobre-mi', resenas: 'sobre-mi', preguntas: 'contacto' };
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var id = entry.target.id in alias ? alias[entry.target.id] : entry.target.id;
-        Object.keys(links).forEach(function (k) { links[k].classList.remove('is-active'); });
-        if (links.inicio) links.inicio.toggleAttribute('aria-current', id === 'inicio');
-        if (id && links[id] && id !== 'inicio') links[id].classList.add('is-active');
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    document.querySelectorAll('main section[id]').forEach(function (s) { obs.observe(s); });
-  }
-
   /* ---------- Acordeón ---------- */
   document.querySelectorAll('[data-accordion] .acc-trigger').forEach(function (btn) {
     var panelEl = document.getElementById(btn.getAttribute('aria-controls'));
