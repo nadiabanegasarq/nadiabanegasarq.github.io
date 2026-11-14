@@ -442,12 +442,11 @@ def contact_full(level="h1", title_id="page-title"):
       <div class="wrap contact-grid">
         <div class="contact-copy">
           <{level} class="contact-title" id="{title_id}">{CONTACT_TITLE}</{level}>
-          <p class="contact-text">{CONTACT_TEXT} Atención profesional en Anisacate y localidades cercanas.</p>
+          <p class="contact-text">{CONTACT_TEXT}</p>
           <a class="btn btn-accent btn-xl" href="https://wa.me/{WHATSAPP}" data-wa target="_blank" rel="noopener">{wa_icon()} Escribir por WhatsApp</a>
           <dl class="contact-block">
             <div><dt>WhatsApp</dt><dd><a href="https://wa.me/{WHATSAPP}" data-wa target="_blank" rel="noopener">{WHATSAPP_VISIBLE}</a></dd></div>
             <div><dt>Correo electrónico</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
-            <div><dt>Zona de atención</dt><dd>Anisacate y localidades cercanas, Córdoba</dd></div>
           </dl>
         </div>
         <div class="contact-map">
@@ -488,7 +487,6 @@ def about_card(level, title_id, title_cls):
               <div><dt>Matrícula</dt><dd>{MATRICULA}</dd></div>
               <div><dt>Formación</dt><dd>FAUD · Universidad Nacional de Córdoba</dd></div>
               <div><dt>Trayectoria</dt><dd>Más de 15 años</dd></div>
-              <div><dt>Zona</dt><dd>Anisacate y localidades cercanas</dd></div>
             </dl>
           </div>
         </div>"""
@@ -617,7 +615,6 @@ def page_home():
             {wa('Contame sobre tu proyecto', 'btn btn-primary btn-lg')}
             <a class="btn btn-line btn-lg" href="proyectos.html">Ver proyectos</a>
           </div>
-          <p class="hero-note"><span class="dot" aria-hidden="true"></span>Atención profesional en Anisacate y localidades cercanas.</p>
         </div>
         <figure class="hero-photo">
           {img_tag(photo(hero_p['dir'], hero_p['cover']), hero_p['name'] + ': galería con asador', lazy=False)}
@@ -861,8 +858,7 @@ def page_contact():
   </main>
 """
     return page("Contacto | Nadia Banegas, Arquitecta en Anisacate",
-                "Consultas por WhatsApp al +54 9 3547 66-2066 o por correo. Atención profesional en Anisacate y "
-                "localidades cercanas, Córdoba.", "contacto.html", "contacto", body)
+                "Consultas por WhatsApp al +54 9 3547 66-2066 o por correo. Arquitecta en Anisacate, Córdoba.", "contacto.html", "contacto", body)
 
 
 def sitemap():
